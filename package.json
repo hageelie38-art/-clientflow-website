@@ -1,0 +1,19 @@
+{
+  "name": "clientflow-ai-backend",
+  "version": "1.0.0",
+  "description": "Backend + live dashboard for ClientFlow AI, an AI receptionist service for home service businesses",
+  "private": true,
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}

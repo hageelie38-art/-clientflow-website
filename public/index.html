@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClientFlow AI — Receptionist Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <span class="brand-name">ClientFlow AI</span>
+          <span class="brand-sub">AI Receptionist Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span class="live-label">Live</span>
+        <span class="updated-at" id="updated-at">—</span>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Dashboard sections">
+      <button class="tab" role="tab" data-tab="overview" aria-selected="true">Overview</button>
+      <button class="tab" role="tab" data-tab="calls" aria-selected="false">Call Log</button>
+      <button class="tab" role="tab" data-tab="appointments" aria-selected="false">Booked Appointments</button>
+      <button class="tab" role="tab" data-tab="monthly" aria-selected="false">Monthly Summary</button>
+    </nav>
+
+    <main class="tab-panels">
+      <!-- Overview -->
+      <section class="panel" id="panel-overview" role="tabpanel">
+        <div class="stat-grid" id="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Total Calls</span>
+            <span class="stat-value" id="stat-total-calls">—</span>
+          </div>
+          <div class="stat-card accent-amber">
+            <span class="stat-label">After-Hours Calls</span>
+            <span class="stat-value" id="stat-after-hours">—</span>
+          </div>
+          <div class="stat-card accent-teal">
+            <span class="stat-label">Appointments Booked</span>
+            <span class="stat-value" id="stat-booked">—</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Estimated Revenue</span>
+            <span class="stat-value" id="stat-revenue">—</span>
+          </div>
+        </div>
+
+        <div class="overview-lower">
+          <div class="card gauge-card">
+            <h2 class="card-title">Booking Rate</h2>
+            <div id="gauge-container" class="gauge-container"></div>
+            <p class="summary-sentence" id="summary-sentence">Loading call activity…</p>
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">Next 5 Upcoming Appointments</h2>
+            <ul class="upcoming-list" id="upcoming-list">
+              <li class="empty-state">Loading…</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call Log -->
+      <section class="panel" id="panel-calls" role="tabpanel" hidden>
+        <div class="panel-toolbar">
+          <div class="filter-group" role="group" aria-label="Filter calls">
+            <button class="filter-btn is-active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="after-hours">After-Hours Only</button>
+            <button class="filter-btn" data-filter="booked">Booked Only</button>
+          </div>
+          <span class="row-count" id="calls-count"></span>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="calls-table">
+            <thead>
+              <tr>
+                <th>Caller Name</th>
+                <th>Phone</th>
+                <th>Call Date/Time</th>
+                <th>Call Type</th>
+                <th>Outcome</th>
+                <th class="num">Est. Value</th>
+                <th>After Hours</th>
+              </tr>
+            </thead>
+            <tbody id="calls-tbody">
+              <tr><td colspan="7" class="empty-state">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Booked Appointments -->
+      <section class="panel" id="panel-appointments" role="tabpanel" hidden>
+        <div class="panel-toolbar">
+          <span class="row-count" id="appointments-count"></span>
+          <button class="btn-export" id="export-csv-btn">Export CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Service Type</th>
+                <th>Appointment Date/Time</th>
+                <th>Status</th>
+                <th class="num">Estimated Value</th>
+                <th>Technician Assigned</th>
+              </tr>
+            </thead>
+            <tbody id="appointments-tbody">
+              <tr><td colspan="6" class="empty-state">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Monthly Summary -->
+      <section class="panel" id="panel-monthly" role="tabpanel" hidden>
+        <div class="chart-grid">
+          <div class="card">
+            <h2 class="card-title">Total Calls per Month</h2>
+            <div id="chart-total-calls" class="chart-container"></div>
+          </div>
+          <div class="card">
+            <h2 class="card-title">Booking Rate Trend</h2>
+            <div id="chart-booking-rate" class="chart-container"></div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th class="num">Total Calls</th>
+                <th class="num">After-Hours</th>
+                <th class="num">Appointments Booked</th>
+                <th class="num">Booking Rate</th>
+                <th class="num">Est. Revenue</th>
+                <th class="num">Calls Would've Missed</th>
+              </tr>
+            </thead>
+            <tbody id="monthly-tbody">
+              <tr><td colspan="7" class="empty-state">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="tooltip" class="chart-tooltip" role="tooltip" hidden></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
